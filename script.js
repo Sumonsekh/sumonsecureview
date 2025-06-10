@@ -1,40 +1,51 @@
-// Preview selected file
-document.getElementById('fileInput').addEventListener('change', function (e) {
-  const file = e.target.files[0];
-  const preview = document.getElementById('preview');
-  preview.innerHTML = '';
-
-  if (file) {
-    const url = URL.createObjectURL(file);
-    if (file.type.startsWith('image')) {
-      const img = document.createElement('img');
-      img.src = url;
-      img.style.maxWidth = '100%';
-      preview.appendChild(img);
-    } else if (file.type.startsWith('video')) {
-      const vid = document.createElement('video');
-      vid.src = url;
-      vid.controls = true;
-      vid.style.maxWidth = '100%';
-      preview.appendChild(vid);
-    } else if (file.type.startsWith('audio')) {
-      const aud = document.createElement('audio');
-      aud.src = url;
-      aud.controls = true;
-      preview.appendChild(aud);
-    }
-  }
-});
-
-// Try to detect screenshot
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    alert("⚠️ Warning: Screenshot or screen-recording might be happening!");
-  }
-});
-
-// Form submission
-document.getElementById('uploadForm').addEventListener('submit', function (e) {
+document.getElementById('uploadForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  alert("✅ Form submitted! (No backend connected yet)");
+
+  const type = document.getElementById('contentType').value;
+  const file = document.getElementById('contentFile').files[0];
+  const message = document.getElementById('textMessage').value;
+
+  // Simple validation
+  if (!type) {
+    alert('দয়া করে কন্টেন্ট টাইপ নির্বাচন করুন');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('type', type);
+
+  if (type === 'text') {
+    if (!message) {
+      alert('দয়া করে মেসেজ লিখুন');
+      return;
+    }
+    formData.append('message', message);
+  } else {
+    if (!file) {
+      alert('দয়া করে ফাইল নির্বাচন করুন');
+      return;
+    }
+    formData.append('file', file);
+  }
+
+  // Backend API call
+  const res = await fetch('https://your-backend-api.com/upload', {
+    method: 'POST',
+    body: formData
+  });
+
+  const data = await res.json();
+  if (data.success) {
+    document.getElementById('shareLink').value = data.link;
+    document.getElementById('result').classList.remove('hidden');
+  } else {
+    alert('কিছু ভুল হয়েছে');
+  }
+});
+
+document.getElementById('copyBtn').addEventListener('click', function() {
+  const link = document.getElementById('shareLink');
+  link.select();
+  document.execCommand('copy');
+  alert('লিংক কপি হয়েছে!');
 });
