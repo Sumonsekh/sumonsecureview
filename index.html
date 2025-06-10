@@ -1,26 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Secure Upload</title>
+  <title>SumonSecureView</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>Secure Upload Form</h2>
+  <div class="container">
+    <h1>নিরাপদ শেয়ার সিস্টেম</h1>
+    <form id="uploadForm">
+      <label for="contentType">কন্টেন্ট টাইপ বাছাই করুন:</label>
+      <select id="contentType" required>
+        <option value="">-- নির্বাচন করুন --</option>
+        <option value="image">ছবি</option>
+        <option value="video">ভিডিও</option>
+        <option value="audio">অডিও</option>
+        <option value="text">মেসেজ</option>
+      </select>
 
-  <form id="uploadForm">
-    <label>Message:</label>
-    <textarea id="message" placeholder="Write message..."></textarea><br>
+      <label for="contentFile">ফাইল নির্বাচন করুন (যদি প্রযোজ্য হয়):</label>
+      <input type="file" id="contentFile" />
 
-    <label>Photo/Video/Audio:</label>
-    <input type="file" id="fileInput" accept="image/*,video/*,audio/*" /><br>
+      <label for="textMessage">মেসেজ লিখুন (শুধু টেক্সটের জন্য):</label>
+      <textarea id="textMessage" rows="5" placeholder="এখানে লিখুন..."></textarea>
 
-    <button type="submit">Upload</button>
-  </form>
+      <button type="submit">শেয়ার লিংক তৈরি করুন</button>
+    </form>
 
-  <div id="preview"></div>
-
+    <div id="result" class="hidden">
+      <p>আপনার লিংক তৈরি হয়েছে!</p>
+      <input type="text" id="shareLink" readonly />
+      <button id="copyBtn">কপি করুন</button>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
