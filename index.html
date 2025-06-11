@@ -1,39 +1,24 @@
-<!DOCTYPE html>
-<html lang="bn">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SumonSecureView</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sumon Secure View</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>নিরাপদ শেয়ার সিস্টেম</h1>
-    <form id="uploadForm">
-      <label for="contentType">কন্টেন্ট টাইপ বাছাই করুন:</label>
-      <select id="contentType" required>
-        <option value="">-- নির্বাচন করুন --</option>
-        <option value="image">ছবি</option>
-        <option value="video">ভিডিও</option>
-        <option value="audio">অডিও</option>
-        <option value="text">মেসেজ</option>
-      </select>
+    <h1>📤 Share Your Content Securely</h1><label for="message">Your Message:</label>
+<textarea id="message" rows="4" placeholder="Write your secret message..."></textarea>
 
-      <label for="contentFile">ফাইল নির্বাচন করুন (যদি প্রযোজ্য হয়):</label>
-      <input type="file" id="contentFile" />
+<label for="file">Upload File (Optional):</label>
+<input type="file" id="file" accept="image/*,video/*,audio/*" />
 
-      <label for="textMessage">মেসেজ লিখুন (শুধু টেক্সটের জন্য):</label>
-      <textarea id="textMessage" rows="5" placeholder="এখানে লিখুন..."></textarea>
+<button onclick="uploadContent()">Generate One-Time Link</button>
 
-      <button type="submit">শেয়ার লিংক তৈরি করুন</button>
-    </form>
+<div id="linkSection" class="hidden">
+  <p>✅ Link generated! Share this link (one-time view):</p>
+  <a id="generatedLink" href="#" target="_blank"></a>
+</div>
 
-    <div id="result" class="hidden">
-      <p>আপনার লিংক তৈরি হয়েছে!</p>
-      <input type="text" id="shareLink" readonly />
-      <button id="copyBtn">কপি করুন</button>
-    </div>
-  </div>
-  <script src="script.js"></script>
-</body>
+  </div>  <script src="script.js"></script></body>
 </html>
